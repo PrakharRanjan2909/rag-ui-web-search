@@ -381,6 +381,10 @@ from open_webui.config import (
     ENABLE_LDAP_GROUP_MANAGEMENT,
     ENABLE_LDAP_GROUP_CREATION,
     LDAP_ATTRIBUTE_FOR_GROUPS,
+    # Generic Group Management
+    ENABLE_GROUP_MANAGEMENT,
+    ENABLE_GROUP_CREATION,
+    BLOCKED_GROUPS,
     # Misc
     ENV,
     CACHE_DIR,
@@ -482,6 +486,7 @@ from open_webui.utils.oauth import (
     decrypt_data,
     OAuthClientInformationFull,
 )
+from open_webui.utils.group import GroupManager
 from open_webui.utils.security_headers import SecurityHeadersMiddleware
 from open_webui.utils.redis import get_redis_connection
 
@@ -618,6 +623,9 @@ app.state.oauth_manager = oauth_manager
 # For Integrations
 oauth_client_manager = OAuthClientManager(app)
 app.state.oauth_client_manager = oauth_client_manager
+
+group_manager = GroupManager()
+app.state.group_manager = group_manager
 
 app.state.instance_id = None
 app.state.config = AppConfig(
@@ -780,6 +788,10 @@ app.state.config.ENABLE_LDAP_GROUP_MANAGEMENT = ENABLE_LDAP_GROUP_MANAGEMENT
 app.state.config.ENABLE_LDAP_GROUP_CREATION = ENABLE_LDAP_GROUP_CREATION
 app.state.config.LDAP_ATTRIBUTE_FOR_GROUPS = LDAP_ATTRIBUTE_FOR_GROUPS
 
+# For Group Management
+app.state.config.ENABLE_GROUP_MANAGEMENT = ENABLE_GROUP_MANAGEMENT
+app.state.config.ENABLE_GROUP_CREATION = ENABLE_GROUP_CREATION
+app.state.config.BLOCKED_GROUPS = BLOCKED_GROUPS
 
 app.state.AUTH_TRUSTED_EMAIL_HEADER = WEBUI_AUTH_TRUSTED_EMAIL_HEADER
 app.state.AUTH_TRUSTED_NAME_HEADER = WEBUI_AUTH_TRUSTED_NAME_HEADER
